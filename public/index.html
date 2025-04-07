@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunar Observation Journal</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Lunar Observation Journal</h1>
+      <p>Track your moon observations and correlate with astronomical data</p>
+    </header>
+
+    <div class="controls">
+      <div class="search-sort">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search locations or notes..."
+        />
+        <select id="sort">
+          <option value="date-desc">Date (Newest First)</option>
+          <option value="date-asc">Date (Oldest First)</option>
+          <option value="phase">Moon Phase</option>
+          <option value="location">Location</option>
+        </select>
+      </div>
+      <button id="add-observation">+ New Observation</button>
+    </div>
+
+    <div id="observations-list">
+      <!-- Observations will be dynamically inserted here -->
+      <div class="observation-card">
+        <div class="observation-header">
+          <div>
+            <span class="moon-phase-icon">🌖</span>
+            <span class="observation-date">April 7, 2025</span>
+          </div>
+          <span class="observation-location">Krakow</span>
+        </div>
+        <div class="observation-notes">
+          Clear night, excellent visibility of craters along the terminator.
+        </div>
+        <div class="observation-details">
+          <div class="detail-item">
+            <strong>Moon Phase:</strong> Waxing Gibbous
+          </div>
+          <div class="detail-item"><strong>Visible:</strong> Yes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button id="prev-page" disabled>Previous</button>
+      <span id="page-info">Page 1 of 3</span>
+      <button id="next-page">Next</button>
+    </div>
+
+    <div class="modal" id="observation-modal">
+      <div class="modal-content">
+        <h2 id="modal-title">Add New Observation</h2>
+        <form id="observation-form">
+          <input type="hidden" id="observation-id" />
+
+          <div class="form-group">
+            <label for="observation-date">Date</label>
+            <input type="date" id="observation-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              placeholder="e.g., Krakow"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="visibility">Visibility Conditions</label>
+            weather api
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Observation Notes</label>
+            <textarea id="notes" rows="4"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Save Observation</button>
+            <button type="button" id="cancel-observation">Cancel</button>
+            <button type="button" id="fetch-moon-data">Fetch Moon Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
