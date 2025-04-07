@@ -1,24 +1,19 @@
-const { fetchMoonData } = require("./moonAPI");
 const express = require("express");
 const db = require("./database");
+const { fetchWeather } = require("./weatherAPI");
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/api/moon-data", async (req, res) => {
+app.get("/api/weather", async (req, res) => {
   try {
-    const { date, location } = req.query;
-
-    if (!date || !location) {
-      return res.status(400).json({ error: "Date and location are required" });
-    }
-    const moonData = await fetchMoonData(date, location);
-    res.json(moonData);
+    const weatherData = await fetchWeather();
+    res.json(weatherData);
   } catch (error) {
-    console.error("Error: ", error);
-    res.status(500).json({ error: error.message });
+    console.error("Server error fetching weather:", error);
+    res.status(500).json({ error: "Failed to fetch weather data" });
   }
 });
 

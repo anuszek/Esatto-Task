@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lunar Observation Journal</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
   </head>
   <body>
     <header>
       <h1>Lunar Observation Journal</h1>
+      <div id="test"></div>
       <p>Track your moon observations and correlate with astronomical data</p>
     </header>
 
@@ -81,7 +82,21 @@
 
           <div class="form-group">
             <label for="visibility">Visibility Conditions</label>
-            weather api
+            <p id="weather"></p>
+            <label for="visibility-yes">Yes</label>
+            <input
+              type="radio"
+              id="visibility-yes"
+              name="visibility"
+              value="yes"
+            />
+            <label for="visibility-no">No</label>
+            <input
+              type="radio"
+              id="visibility-no"
+              name="visibility"
+              value="no"
+            />
           </div>
 
           <div class="form-group">

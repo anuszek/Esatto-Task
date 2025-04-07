@@ -1,12 +1,27 @@
+import { Moon } from "https://cdn.jsdelivr.net/npm/lunarphase-js@2.0.1/+esm";
+
 const addObservationBtn = document.getElementById("add-observation");
 const observationModal = document.getElementById("observation-modal");
 const observationForm = document.getElementById("observation-form");
 const cancelObservationBtn = document.getElementById("cancel-observation");
 const fetchMoonDataBtn = document.getElementById("fetch-moon-data");
 
-addObservationBtn.addEventListener("click", () => {
+addObservationBtn.addEventListener("click", async () => {
   document.getElementById("modal-title").textContent = "Add New Observation";
   document.getElementById("observation-id").value = "";
+  try {
+    const weatherData = await getWeatherData();
+    console.log(weatherData);
+
+    if (weatherData) {
+      document.getElementById("weather").innerText = weatherData.main;
+    } else {
+      document.getElementById("weather").innerText = "Weather data unavailable";
+    }
+  } catch (error) {
+    console.error("Error getting weather data:", error);
+    document.getElementById("weather").innerText = "Error fetching weather";
+  }
   observationForm.reset();
   observationModal.style.display = "flex";
 });
@@ -15,38 +30,7 @@ cancelObservationBtn.addEventListener("click", () => {
   observationModal.style.display = "none";
 });
 
-fetchMoonDataBtn.addEventListener("click", async () => {
-  const date = document.getElementById("observation-date").value;
-  const location = document.getElementById("location").value;
-
-  if (!date) {
-    alert("Please enter a date first");
-    return;
-  }
-
-  try {
-    // In a real app, you would call your backend which calls the moon API
-    // This is a mock implementation
-    const mockMoonData = {
-      moon_phase: getRandomPhase(),
-      illumination: Math.floor(Math.random() * 100),
-      moonrise: "19:45",
-      moonset: "05:23",
-    };
-
-    // Display the data (in a real app, you might store this)
-    alert(
-      `Fetched moon data:\n
-      Phase: ${mockMoonData.moon_phase}\n
-      Illumination: ${mockMoonData.illumination}%\n
-      Moonrise: ${mockMoonData.moonrise}\n
-      Moonset: ${mockMoonData.moonset}`
-    );
-  } catch (error) {
-    console.error("Error fetching moon data:", error);
-    alert("Failed to fetch moon data. Please try again.");
-  }
-});
+fetchMoonDataBtn.addEventListener("click", async () => {});
 
 observationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -55,10 +39,8 @@ observationForm.addEventListener("submit", async (e) => {
   const observationData = {
     date: document.getElementById("observation-date").value,
     location: document.getElementById("location").value,
-    visibility: document.getElementById("visibility").value,
-    equipment: document.getElementById("equipment").value,
+    // visibility: document.getElementById("visibility").value,
     notes: document.getElementById("notes").value,
-    image_url: document.getElementById("image-url").value,
   };
 
   console.log("Observation data to save:", observationData);
@@ -69,19 +51,19 @@ observationForm.addEventListener("submit", async (e) => {
   // In a real app: fetchObservations();
 });
 
-// Helper functions
-function getRandomPhase() {
-  const phases = [
-    "New Moon",
-    "Waxing Crescent",
-    "First Quarter",
-    "Waxing Gibbous",
-    "Full Moon",
-    "Waning Gibbous",
-    "Last Quarter",
-    "Waning Crescent",
-  ];
-  return phases[Math.floor(Math.random() * phases.length)];
+// helper functions
+
+async function getWeatherData() {
+  try {
+    const response = await fetch("/api/weather");
+    if (!response.ok) {
+      throw new Error("Failed to fetch weather data");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    return null;
+  }
 }
 
 // close modal when clicking outside
