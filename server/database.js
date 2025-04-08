@@ -16,9 +16,8 @@ db.serialize(() => {
     CREATE TABLE IF NOT EXISTS observations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       date DATE,
-      location TEXT NOT NULL,
+      visibility BOOLEAN,
       moon_phase TEXT,
-      visibility BOOLEAN DEAFAULT TRUE,
       rating NUMERIC,
       notes TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

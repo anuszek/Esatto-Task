@@ -25,13 +25,25 @@ app.get("/api/observations", (req, res) => {
 });
 
 app.post("/api/observations", (req, res) => {
-  const { date, location, details } = req.body;
+  const { date, visibility, phase, rating, notes } = req.body;
 
-  if (!date || !location || !details) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
+  console.log("Received observation data:", req.body);
 
-  db.run();
+  db.run(
+    `INSERT INTO observations (date, visibility, moon_phase, rating, notes) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [date, visibility === "true", phase, rating, notes],
+    function (err) {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({
+        message: "Observation added successfully",
+        id: this.lastID,
+      });
+    }
+  );
 });
 
 app.listen(port, () => {

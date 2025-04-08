@@ -32,7 +32,6 @@
     </div>
 
     <div id="observations-list">
-      <!-- Observations will be dynamically inserted here -->
       <div class="observation-card">
         <div class="observation-header">
           <div>
@@ -65,38 +64,75 @@
         <form id="observation-form">
           <input type="hidden" id="observation-id" />
 
+          <label id="current-date"></label>
+          <p id="weather"></p>
+          <p id="moon-phase"></p>
+
           <div class="form-group">
-            <label for="observation-date">Date</label>
-            <input type="date" id="observation-date" required />
+            <div class="radio-group">
+              <p>Is moon visible?</p>
+              <div class="radio-option">
+                <p for="visibility-yes">Yes</p>
+                <input
+                  type="radio"
+                  id="visibility-yes"
+                  name="visibility"
+                  value="true"
+                  required
+                />
+              </div>
+              <div class="radio-option">
+                <p for="visibility-no">No</p>
+                <input
+                  type="radio"
+                  id="visibility-no"
+                  name="visibility"
+                  value="false"
+                  required
+                />
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="location">Location</label>
-            <input
-              type="text"
-              id="location"
-              placeholder="e.g., Krakow"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="visibility">Visibility Conditions</label>
-            <p id="weather"></p>
-            <label for="visibility-yes">Yes</label>
-            <input
-              type="radio"
-              id="visibility-yes"
-              name="visibility"
-              value="yes"
-            />
-            <label for="visibility-no">No</label>
-            <input
-              type="radio"
-              id="visibility-no"
-              name="visibility"
-              value="no"
-            />
+            <label>Rate moon:</label>
+            <div class="radio-input">
+              <input
+                class="star s1"
+                type="radio"
+                id="value-1"
+                name="value-radio"
+                value="value-1"
+              />
+              <input
+                class="star s2"
+                type="radio"
+                id="value-2"
+                name="value-radio"
+                value="value-2"
+              />
+              <input
+                class="star s3"
+                type="radio"
+                id="value-3"
+                name="value-radio"
+                value="value-3"
+              />
+              <input
+                class="star s4"
+                type="radio"
+                id="value-4"
+                name="value-radio"
+                value="value-4"
+              />
+              <input
+                class="star s5"
+                type="radio"
+                id="value-5"
+                name="value-radio"
+                value="value-5"
+              />
+            </div>
           </div>
 
           <div class="form-group">
@@ -107,7 +143,6 @@
           <div class="form-group">
             <button type="submit">Save Observation</button>
             <button type="button" id="cancel-observation">Cancel</button>
-            <button type="button" id="fetch-moon-data">Fetch Moon Data</button>
           </div>
         </form>
       </div>
