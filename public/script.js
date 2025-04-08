@@ -81,7 +81,8 @@ observationForm.addEventListener("submit", async (e) => {
 
   observationModal.style.display = "none";
 
-  fetchObservations();
+  await fetchObservations();
+  renderObservations(observationsArray);
 });
 
 prevPageBtn.addEventListener("click", () => {
@@ -99,7 +100,6 @@ nextPageBtn.addEventListener("click", () => {
   }
 });
 
-// fetch functions
 async function getWeatherData() {
   try {
     const response = await fetch("/api/weather");
@@ -154,7 +154,6 @@ async function addObservation(observationData) {
   }
 }
 
-// helper functions
 function renderObservations(observations) {
   if (!observations || observations.length === 0) {
     observationsList.innerHTML =
@@ -181,28 +180,26 @@ function renderObservations(observations) {
     card.className = "observation-card";
     card.innerHTML = `
     <div class="observation-header">
-          <div>
-            <span class="moon-phase-icon">${moonIcon}</span>
-            <span class="observation-date">${formattedDate}</span>
-          </div>
-        </div>
-        <div class="observation-notes">
-        ${observation.notes || "No notes provided"}
-        </div>
-        <div class="observation-details">
-          <div class="detail-item">
-            <strong>Moon Phase: ${observation.moon_phase}</strong> 
-          </div>
-          <div class="detail-item"><strong>Visible: ${
-            observation.visibility ? "Yes" : "No"
-          }</strong>
-          </div>
-          <div class="detail-item">
-          <strong>Rating: </strong> ${getRatingStars(observation.rating)}
-        </div>
-        </div>
-        </div>
-        `;
+      <div>
+        <span class="moon-phase-icon">${moonIcon}</span>
+        <span class="observation-date">${formattedDate}</span>
+      </div>
+    </div>
+    <div class="observation-details">
+      <div class="detail-item">
+        <strong>Moon Phase: ${observation.moon_phase}</strong> 
+      </div>
+      <div class="detail-item">
+        <strong>Visible: ${observation.visibility ? "Yes" : "No"}</strong>
+      </div>
+      <div class="detail-item">
+        <strong>Rating: </strong> ${getRatingStars(observation.rating)}
+      </div>     
+    </div>     
+    <div class="observation-notes">
+      ${observation.notes || "<i>No notes provided</i>"}
+    </div>
+   `;
     observationsList.appendChild(card);
   });
 

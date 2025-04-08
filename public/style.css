@@ -158,21 +158,24 @@ textarea {
   color: var(--primary);
 }
 
-.observation-location {
-  color: var(--text-dark);
-  font-style: italic;
-}
-
 .observation-details {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .detail-item {
   flex: 1;
   min-width: 120px;
+}
+
+.observation-notes {
+  background-color: var(--primary);
+  color: var(--text-light);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .pagination {
