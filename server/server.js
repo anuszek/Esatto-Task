@@ -27,8 +27,6 @@ app.get("/api/observations", (req, res) => {
 app.post("/api/observations", (req, res) => {
   const { date, visibility, phase, rating, notes } = req.body;
 
-  console.log("Received observation data:", req.body);
-
   db.run(
     `INSERT INTO observations (date, visibility, moon_phase, rating, notes) 
      VALUES (?, ?, ?, ?, ?)`,
