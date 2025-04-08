@@ -5,7 +5,7 @@ async function init() {
     const observations = await fetchObservations();
     renderObservations(observations);
 
-    setupEventListeners();
+    updatePaginationControls();
   } catch (error) {
     console.error("Initialization error:", error);
   }
@@ -18,6 +18,12 @@ const observationModal = document.getElementById("observation-modal");
 const observationForm = document.getElementById("observation-form");
 const cancelObservationBtn = document.getElementById("cancel-observation");
 const observationsList = document.getElementById("observations-list");
+const prevPageBtn = document.getElementById("prev-page");
+const nextPageBtn = document.getElementById("next-page");
+
+const itemsPerPage = 3;
+let currentPage = 1;
+let observationsArray = [];
 
 var date = null;
 var time = null;
@@ -33,8 +39,6 @@ addObservationBtn.addEventListener("click", async () => {
 
   try {
     const weatherData = await getWeatherData();
-    console.log(weatherData);
-
     if (weatherData) {
       document.getElementById(
         "weather"
@@ -80,6 +84,21 @@ observationForm.addEventListener("submit", async (e) => {
   fetchObservations();
 });
 
+prevPageBtn.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderObservations(observationsArray);
+  }
+});
+
+nextPageBtn.addEventListener("click", () => {
+  const totalPages = Math.ceil(observationsArray.length / itemsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderObservations(observationsArray);
+  }
+});
+
 // fetch functions
 async function getWeatherData() {
   try {
@@ -100,10 +119,8 @@ async function fetchObservations() {
     if (!response.ok) {
       throw new Error("Failed to fetch observations");
     }
-
     const observations = await response.json();
-    console.log("Fetched observations:", observations);
-
+    observationsArray = observations;
     return observations;
   } catch (error) {
     console.error("Error fetching observations:", error);
@@ -132,22 +149,26 @@ async function addObservation(observationData) {
     }
 
     const newObservation = await response.json();
-    console.log("New observation added:", newObservation);
   } catch (error) {
     console.error("Error adding observation:", error);
   }
 }
 
+// helper functions
 function renderObservations(observations) {
-  observationsList.innerHTML = "";
-
-  if (observations.length === 0) {
+  if (!observations || observations.length === 0) {
     observationsList.innerHTML =
       '<p class="no-results">No observations found</p>';
+    updatePaginationControls();
     return;
   }
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedObservations = observations.slice(startIndex, endIndex);
 
-  observations.forEach((observation) => {
+  observationsList.innerHTML = "";
+
+  paginatedObservations.forEach((observation) => {
     const moonIcon = getMoonPhaseIcon(observation.moon_phase);
     const dateObj = new Date(observation.date);
     const formattedDate = dateObj.toLocaleDateString("en-US", {
@@ -184,9 +205,10 @@ function renderObservations(observations) {
         `;
     observationsList.appendChild(card);
   });
+
+  updatePaginationControls();
 }
 
-// helper functions
 function getMoonPhaseIcon(phase) {
   const phaseIcons = {
     "New Moon": "🌑",
@@ -205,6 +227,17 @@ function getMoonPhaseIcon(phase) {
 function getRatingStars(rating) {
   const numRating = parseInt(rating);
   return "★".repeat(numRating) + "☆".repeat(5 - numRating);
+}
+
+function updatePaginationControls() {
+  const totalPages = Math.ceil(observationsArray.length / itemsPerPage);
+
+  document.getElementById("page-info").textContent = `Page ${currentPage} of ${
+    totalPages || 1
+  }`;
+  document.getElementById("prev-page").disabled = currentPage <= 1;
+  document.getElementById("next-page").disabled =
+    currentPage >= totalPages || totalPages === 0;
 }
 
 window.addEventListener("click", (e) => {
