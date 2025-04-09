@@ -16,11 +16,7 @@
 
     <div class="controls">
       <div class="search-sort">
-        <input
-          type="text"
-          id="search"
-          placeholder="Search observations..."
-        />
+        <input type="text" id="search" placeholder="Search observations..." />
         <select id="sort">
           <option value="date-desc">Date (Newest First)</option>
           <option value="date-asc">Date (Oldest First)</option>
@@ -118,6 +114,96 @@
 
           <div class="form-group">
             <label for="notes">Observation Notes</label>
+            <textarea id="notes" rows="4"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Save Observation</button>
+            <button type="button" id="cancel-observation">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="edit-observation-modal">
+      <div class="modal-content">
+        <h2 id="modal-title">Edit Observation</h2>
+        <form id="observation-form">
+          <input type="hidden" id="observation-id" />
+
+          <label id="current-date"></label>
+          <p id="weather"></p>
+          <p id="moon-phase"></p>
+
+          <div class="form-group">
+            <div class="radio-group">
+              <p>Was moon visible?</p>
+              <div class="radio-option">
+                <p for="visibility-yes">Yes</p>
+                <input
+                  type="radio"
+                  id="visibility-yes"
+                  name="visibility"
+                  value="true"
+                  required
+                />
+              </div>
+              <div class="radio-option">
+                <p for="visibility-no">No</p>
+                <input
+                  type="radio"
+                  id="visibility-no"
+                  name="visibility"
+                  value="false"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Change rating:</label>
+            <div class="radio-input">
+              <input
+                class="star s5"
+                type="radio"
+                id="value-5"
+                name="value-radio"
+                value="value-5"
+              />
+              <input
+                class="star s4"
+                type="radio"
+                id="value-4"
+                name="value-radio"
+                value="value-4"
+              />
+              <input
+                class="star s3"
+                type="radio"
+                id="value-3"
+                name="value-radio"
+                value="value-3"
+              />
+              <input
+                class="star s2"
+                type="radio"
+                id="value-2"
+                name="value-radio"
+                value="value-2"
+              />
+              <input
+                class="star s1"
+                type="radio"
+                id="value-1"
+                name="value-radio"
+                value="value-1"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Edit Notes</label>
             <textarea id="notes" rows="4"></textarea>
           </div>
 

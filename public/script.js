@@ -154,6 +154,23 @@ async function addObservation(observationData) {
   }
 }
 
+async function deleteObservation(id) {
+  try {
+    const response = await fetch(`/api/observations/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete observation");
+    }
+    const deletedObservation = await response.json();
+    console.log("Deleted observation:", deletedObservation);
+    observationsArray = observationsArray.filter((obs) => obs.id !== id);
+    renderObservations(observationsArray);
+  } catch (error) {
+    console.error("Error deleting observation:", error);
+  }
+}
+
 function renderObservations(observations) {
   if (!observations || observations.length === 0) {
     observationsList.innerHTML =
@@ -168,6 +185,8 @@ function renderObservations(observations) {
   observationsList.innerHTML = "";
 
   paginatedObservations.forEach((observation) => {
+    console.log(observation);
+
     const moonIcon = getMoonPhaseIcon(observation.moon_phase);
     const dateObj = new Date(observation.date);
     const formattedDate = dateObj.toLocaleDateString("en-US", {
@@ -183,6 +202,10 @@ function renderObservations(observations) {
       <div>
         <span class="moon-phase-icon">${moonIcon}</span>
         <span class="observation-date">${formattedDate}</span>
+      </div>
+      <div>
+        <button class="edit-btn" data-id="${observation.id}">Edit</button>
+        <button class="delete-btn" data-id="${observation.id}">Delete</button>
       </div>
     </div>
     <div class="observation-details">
@@ -204,6 +227,29 @@ function renderObservations(observations) {
   });
 
   updatePaginationControls();
+}
+
+observationsList.addEventListener('click', (event) => {
+  if (event.target.classList.contains('delete-btn')) {
+    const id = parseInt(event.target.getAttribute('data-id'), 10);
+    deleteObservation(id);
+  }
+  
+  if (event.target.classList.contains('edit-btn')) {
+    const id = parseInt(event.target.getAttribute('data-id'), 10);
+    editObservation(id);
+  }
+});
+
+function editObservation(id) {
+  console.log("Editing observation:", id);
+  const observation = observationsArray.find((obs) => obs.id === id);
+  if (!observation) {
+    console.error("Observation not found:", id);
+    return;
+  }
+
+  document.getElementById("edit-observation-modal").style.display = "flex";
 }
 
 function getMoonPhaseIcon(phase) {

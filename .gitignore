@@ -12,4 +12,7 @@ node_modules/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
-server/lunar_database.db
+
+# production
+*.db
+*.db
