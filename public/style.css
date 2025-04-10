@@ -190,6 +190,12 @@ textarea {
   padding: 5px 10px;
 }
 
+.no-results{
+  color: var(--text-light);
+  text-align: center;
+  font-size: 1.2rem;
+}
+
 @media (max-width: 768px) {
   .controls {
     flex-direction: column;

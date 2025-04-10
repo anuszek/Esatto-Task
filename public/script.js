@@ -13,6 +13,7 @@ async function init() {
 
 document.addEventListener("DOMContentLoaded", init);
 
+const searchInput = document.getElementById("search");
 const addObservationBtn = document.getElementById("add-observation");
 const observationModal = document.getElementById("observation-modal");
 const observationForm = document.getElementById("observation-form");
@@ -25,8 +26,18 @@ const itemsPerPage = 3;
 let currentPage = 1;
 let observationsArray = [];
 
-var date = null;
-var time = null;
+let date = null;
+let time = null;
+
+searchInput.addEventListener("input", (e) => {
+  const searchTerm = e.target.value.toLowerCase();
+  const filteredObservations = observationsArray.filter((observation) => {
+    return observation.notes.toLowerCase().includes(searchTerm);
+  });
+  renderObservations(filteredObservations);
+  currentPage = 1;
+  updatePaginationControls();
+});
 
 addObservationBtn.addEventListener("click", async () => {
   date = new Date().toISOString().split("T")[0];
@@ -75,7 +86,6 @@ observationForm.addEventListener("submit", async (e) => {
       .value.slice(-1),
     notes: document.getElementById("notes").value,
   };
-  console.log(observationData);
 
   addObservation(observationData);
 
@@ -163,7 +173,6 @@ async function deleteObservation(id) {
       throw new Error("Failed to delete observation");
     }
     const deletedObservation = await response.json();
-    console.log("Deleted observation:", deletedObservation);
     observationsArray = observationsArray.filter((obs) => obs.id !== id);
     renderObservations(observationsArray);
   } catch (error) {
@@ -185,8 +194,6 @@ function renderObservations(observations) {
   observationsList.innerHTML = "";
 
   paginatedObservations.forEach((observation) => {
-    console.log(observation);
-
     const moonIcon = getMoonPhaseIcon(observation.moon_phase);
     const dateObj = new Date(observation.date);
     const formattedDate = dateObj.toLocaleDateString("en-US", {
@@ -229,26 +236,21 @@ function renderObservations(observations) {
   updatePaginationControls();
 }
 
-observationsList.addEventListener('click', (event) => {
-  if (event.target.classList.contains('delete-btn')) {
-    const id = parseInt(event.target.getAttribute('data-id'), 10);
+observationsList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete-btn")) {
+    const id = parseInt(event.target.getAttribute("data-id"), 10);
     deleteObservation(id);
   }
-  
-  if (event.target.classList.contains('edit-btn')) {
-    const id = parseInt(event.target.getAttribute('data-id'), 10);
+
+  if (event.target.classList.contains("edit-btn")) {
+    const id = parseInt(event.target.getAttribute("data-id"), 10);
     editObservation(id);
   }
 });
 
-function editObservation(id) {
-  console.log("Editing observation:", id);
-  const observation = observationsArray.find((obs) => obs.id === id);
-  if (!observation) {
-    console.error("Observation not found:", id);
-    return;
-  }
+function editObservation(id) {}
 
+function showObservation(id) {
   document.getElementById("edit-observation-modal").style.display = "flex";
 }
 
