@@ -14,7 +14,9 @@ async function init() {
 document.addEventListener("DOMContentLoaded", init);
 
 const searchInput = document.getElementById("search");
+const sortSelect = document.getElementById("sort");
 const addObservationBtn = document.getElementById("add-observation");
+
 const observationModal = document.getElementById("observation-modal");
 const observationForm = document.getElementById("observation-form");
 const cancelObservationBtn = document.getElementById("cancel-observation");
@@ -42,6 +44,36 @@ searchInput.addEventListener("input", (e) => {
     return observation.notes.toLowerCase().includes(searchTerm);
   });
   renderObservations(filteredObservations);
+  currentPage = 1;
+  updatePaginationControls();
+});
+
+sortSelect.addEventListener("change", (e) => {
+  const sortOrder = e.target.value;
+
+  switch (sortOrder) {
+    case "date-asc":
+      observationsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
+      break;
+    case "date-desc":
+      observationsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+      break;
+    case "phase":
+      observationsArray.sort((a, b) =>
+        a.moon_phase.localeCompare(b.moon_phase)
+      );
+      break;
+    case "rating-asc":
+      observationsArray.sort((a, b) => parseInt(a.rating) - parseInt(b.rating));
+      break;
+    case "rating-desc":
+      observationsArray.sort((a, b) => parseInt(b.rating) - parseInt(a.rating));
+      break;
+    default:
+      break;
+  }
+
+  renderObservations(observationsArray);
   currentPage = 1;
   updatePaginationControls();
 });
@@ -232,8 +264,6 @@ async function updateObservation(data) {
 }
 
 function renderObservations(observations) {
-  console.log(observations);
-  
   if (!observations || observations.length === 0) {
     observationsList.innerHTML =
       '<p class="no-results">No observations found</p>';
@@ -273,7 +303,9 @@ function renderObservations(observations) {
         <strong>Moon Phase: ${observation.moon_phase}</strong> 
       </div>
       <div class="detail-item">
-        <strong>Visible: ${observation.visibility == "true" ? "Yes" : "No"}</strong>
+        <strong>Visible: ${
+          observation.visibility == "true" ? "Yes" : "No"
+        }</strong>
       </div>
       <div class="detail-item">
         <strong>Rating: </strong> ${getRatingStars(observation.rating)}
