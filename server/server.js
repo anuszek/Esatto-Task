@@ -44,6 +44,21 @@ app.post("/api/observations", (req, res) => {
   );
 });
 
+app.delete("/api/observations/:id", (req, res) => {
+  const id = req.params.id;
+
+  db.run(`DELETE FROM observations WHERE id = ?`, id, function (err) {
+    if (err) {
+      console.error("Database error:", err);
+      return res.status(500).json({ error: err.message });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Observation not found" });
+    }
+    res.json({ message: "Observation deleted successfully" });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
