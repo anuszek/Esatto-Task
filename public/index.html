@@ -21,7 +21,8 @@
           <option value="date-desc">Date (Newest First)</option>
           <option value="date-asc">Date (Oldest First)</option>
           <option value="phase">Moon Phase</option>
-          <option value="raing">Rating</option>
+          <option value="raing-asc">Rating (Low to High)</option>
+          <option value="raing-desc">Rating (High to Low)</option>
         </select>
       </div>
       <button id="add-observation">+ New Observation</button>
@@ -133,32 +134,27 @@
     <div class="modal" id="edit-observation-modal">
       <div class="modal-content">
         <h2 id="modal-title">Edit Observation</h2>
-        <form id="observation-form">
-          <input type="hidden" id="observation-id" />
-
-          <label id="current-date"></label>
-          <p id="weather"></p>
-          <p id="moon-phase"></p>
-
+        <form id="edit-observation-form">
+          <input type="hidden" id="edit-observation-id" />
           <div class="form-group">
             <div class="radio-group">
               <p>Was moon visible?</p>
               <div class="radio-option">
-                <p for="visibility-yes">Yes</p>
+                <p>Yes</p>
                 <input
                   type="radio"
-                  id="visibility-yes"
-                  name="visibility"
+                  id="edit-visibility-yes"
+                  name="edit-visibility"
                   value="true"
                   required
                 />
               </div>
               <div class="radio-option">
-                <p for="visibility-no">No</p>
+                <p>No</p>
                 <input
                   type="radio"
-                  id="visibility-no"
-                  name="visibility"
+                  id="edit-visibility-no"
+                  name="edit-visibility"
                   value="false"
                   required
                 />
@@ -172,49 +168,49 @@
               <input
                 class="star s5"
                 type="radio"
-                id="value-5"
-                name="value-radio"
-                value="value-5"
+                id="edit-value-5"
+                name="edit-value-radio"
+                value="5"
               />
               <input
                 class="star s4"
                 type="radio"
-                id="value-4"
-                name="value-radio"
-                value="value-4"
+                id="edit-value-4"
+                name="edit-value-radio"
+                value="4"
               />
               <input
                 class="star s3"
                 type="radio"
-                id="value-3"
-                name="value-radio"
-                value="value-3"
+                id="edit-value-3"
+                name="edit-value-radio"
+                value="3"
               />
               <input
                 class="star s2"
                 type="radio"
-                id="value-2"
-                name="value-radio"
-                value="value-2"
+                id="edit-value-2"
+                name="edit-value-radio"
+                value="2"
               />
               <input
                 class="star s1"
                 type="radio"
-                id="value-1"
-                name="value-radio"
-                value="value-1"
+                id="edit-value-1"
+                name="edit-value-radio"
+                value="1"
               />
             </div>
           </div>
 
           <div class="form-group">
             <label for="notes">Edit Notes</label>
-            <textarea id="notes" rows="4"></textarea>
+            <textarea id="edit-notes" rows="4"></textarea>
           </div>
 
           <div class="form-group">
             <button type="submit">Save Observation</button>
-            <button type="button" id="cancel-observation">Cancel</button>
+            <button type="button" id="cancel-edit-observation">Cancel</button>
           </div>
         </form>
       </div>

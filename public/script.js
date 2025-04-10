@@ -18,6 +18,13 @@ const addObservationBtn = document.getElementById("add-observation");
 const observationModal = document.getElementById("observation-modal");
 const observationForm = document.getElementById("observation-form");
 const cancelObservationBtn = document.getElementById("cancel-observation");
+
+const editObservationModal = document.getElementById("edit-observation-modal");
+const editObservationForm = document.getElementById("edit-observation-form");
+const cancelEditObservationBtn = document.getElementById(
+  "cancel-edit-observation"
+);
+
 const observationsList = document.getElementById("observations-list");
 const prevPageBtn = document.getElementById("prev-page");
 const nextPageBtn = document.getElementById("next-page");
@@ -74,6 +81,10 @@ cancelObservationBtn.addEventListener("click", () => {
   observationModal.style.display = "none";
 });
 
+cancelEditObservationBtn.addEventListener("click", () => {
+  document.getElementById("edit-observation-modal").style.display = "none";
+});
+
 observationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -91,6 +102,24 @@ observationForm.addEventListener("submit", async (e) => {
 
   observationModal.style.display = "none";
 
+  await fetchObservations();
+  renderObservations(observationsArray);
+});
+
+editObservationForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const observationData = {
+    id: document.getElementById("edit-observation-id").value,
+    visibility: document.querySelector('input[name="edit-visibility"]:checked')
+      .value,
+    rating: document.querySelector('input[name="edit-value-radio"]:checked')
+      .value,
+    notes: document.getElementById("edit-notes").value,
+  };
+
+  editObservationModal.style.display = "none";
+  await updateObservation(observationData);
   await fetchObservations();
   renderObservations(observationsArray);
 });
@@ -180,6 +209,8 @@ async function deleteObservation(id) {
   }
 }
 
+async function updateObservation(data) {}
+
 function renderObservations(observations) {
   if (!observations || observations.length === 0) {
     observationsList.innerHTML =
@@ -248,10 +279,15 @@ observationsList.addEventListener("click", (event) => {
   }
 });
 
-function editObservation(id) {}
-
-function showObservation(id) {
-  document.getElementById("edit-observation-modal").style.display = "flex";
+function editObservation(id) {
+  const observation = observationsArray.find((obs) => obs.id === id);
+  document.getElementById("edit-observation-id").value = observation.id;
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById(`edit-value-${i}`).checked =
+      i <= observation.rating ? true : false;
+  }
+  document.getElementById("edit-notes").value = observation.notes;
+  editObservationModal.style.display = "flex";
 }
 
 function getMoonPhaseIcon(phase) {
