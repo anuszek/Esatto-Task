@@ -99,9 +99,7 @@ observationForm.addEventListener("submit", async (e) => {
   };
 
   addObservation(observationData);
-
   observationModal.style.display = "none";
-
   await fetchObservations();
   renderObservations(observationsArray);
 });
@@ -118,8 +116,8 @@ editObservationForm.addEventListener("submit", async (e) => {
     notes: document.getElementById("edit-notes").value,
   };
 
+  updateObservation(observationData);
   editObservationModal.style.display = "none";
-  await updateObservation(observationData);
   await fetchObservations();
   renderObservations(observationsArray);
 });
@@ -209,7 +207,29 @@ async function deleteObservation(id) {
   }
 }
 
-async function updateObservation(data) {}
+async function updateObservation(data) {
+  try {
+    const response = await fetch(`/api/observations/${data.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        visibility: data.visibility,
+        rating: data.rating,
+        notes: data.notes,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update observation");
+    }
+
+    const updatedObservation = await response.json();
+  } catch (error) {
+    console.error("Error updating observation:", error);
+  }
+}
 
 function renderObservations(observations) {
   if (!observations || observations.length === 0) {

@@ -59,6 +59,26 @@ app.delete("/api/observations/:id", (req, res) => {
   });
 });
 
+app.put("/api/observations/:id", (req, res) => {
+  const id = req.params.id;
+  const { visibility, rating, notes } = req.body;
+
+  db.run(
+    `UPDATE observations SET visibility = ?, rating = ?, notes = ? WHERE id = ?`,
+    [visibility, rating, notes, id],
+    function (err) {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: err.message });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: "Observation not found" });
+      }
+      res.json({ message: "Observation updated successfully" });
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
