@@ -232,6 +232,8 @@ async function updateObservation(data) {
 }
 
 function renderObservations(observations) {
+  console.log(observations);
+  
   if (!observations || observations.length === 0) {
     observationsList.innerHTML =
       '<p class="no-results">No observations found</p>';
@@ -271,7 +273,7 @@ function renderObservations(observations) {
         <strong>Moon Phase: ${observation.moon_phase}</strong> 
       </div>
       <div class="detail-item">
-        <strong>Visible: ${observation.visibility ? "Yes" : "No"}</strong>
+        <strong>Visible: ${observation.visibility == "true" ? "Yes" : "No"}</strong>
       </div>
       <div class="detail-item">
         <strong>Rating: </strong> ${getRatingStars(observation.rating)}
