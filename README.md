@@ -2,12 +2,12 @@
 
 ## Setup Guide
 
-1. **Instal Node.js**
+1. **Install Node.js**
 
    - Download and install from [nodejs.org](https://nodejs.org/)
    - Verify installation with `node --version` in your terminal
 
-2. **Instal dependencies**:
+2. **Install dependencies**:
 
    ```bash
    npm install
