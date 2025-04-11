@@ -26,10 +26,6 @@ app.get("/api/observations", (req, res) => {
 
 app.post("/api/observations", (req, res) => {
   const { date, visibility, phase, rating, notes } = req.body;
-
-  console.log("inserting", req.body);
-  
-
   db.run(
     `INSERT INTO observations (date, visibility, moon_phase, rating, notes) 
      VALUES (?, ?, ?, ?, ?)`,
@@ -65,9 +61,6 @@ app.delete("/api/observations/:id", (req, res) => {
 app.put("/api/observations/:id", (req, res) => {
   const id = req.params.id;
   const { visibility, rating, notes } = req.body;
-
-  console.log(req.body);
-  
 
   db.run(
     `UPDATE observations SET visibility = ?, rating = ?, notes = ? WHERE id = ?`,

@@ -1,12 +1,27 @@
 :root {
+  /* Colors */
   --black: #000;
   --white: #fff;
   --text-light: #ccc;
   --text-dark: #333;
+
+  /* Theme colors */
   --background-main: #070f2b;
   --primary: #1b1a55;
   --secondary: #535c91;
   --accent: #9290c3;
+
+  /* Sizing */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+
+  /* Shadows */
+  --shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -20,17 +35,17 @@ body {
   line-height: 1.6;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spacing-lg);
   background-color: var(--background-main);
 }
 
 header {
   text-align: center;
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
   background: linear-gradient(135deg, #0f2027, #00114e, #2c5364);
-  color: white;
-  border-radius: 8px;
+  color: var(--white);
+  border-radius: var(--border-radius-md);
 }
 
 h1 {
@@ -38,27 +53,28 @@ h1 {
   font-size: 2.5rem;
 }
 
+/* CONTROLS & NAVIGATION */
 .controls {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-lg);
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 .search-sort {
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
   justify-content: space-between;
   width: 40%;
 }
 
 button {
-  padding: 10px 15px;
+  padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--secondary);
-  color: white;
+  color: var(--white);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -67,6 +83,19 @@ button:hover {
   background-color: var(--primary);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  gap: var(--spacing-xs);
+  color: var(--text-light);
+}
+
+.pagination button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+/* MODAL STYLES */
 .modal {
   display: none;
   position: fixed;
@@ -80,39 +109,39 @@ button:hover {
   align-items: center;
 }
 
-#modal-title {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
 .modal-content {
   background-color: var(--primary);
   color: var(--text-light);
-  padding: 20px;
-  border-radius: 8px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
   width: 90%;
   max-width: 600px;
 }
 
+#modal-title {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+/* FORM ELEMENTS */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
 }
 
 .radio-group {
   display: flex;
   justify-content: flex-start;
   gap: 40px;
-  /* margin-top: 10px; */
 }
 
 .radio-option {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--spacing-xs);
 }
 
 label {
-  margin-bottom: 5px;
+  margin-bottom: var(--spacing-xs);
   font-weight: bold;
 }
 
@@ -122,7 +151,7 @@ textarea {
   width: 100%;
   padding: 8px;
   border: 1px solid var(--text-dark);
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
 }
 
 input[type="radio"] {
@@ -133,24 +162,63 @@ textarea {
   resize: none;
 }
 
-.moon-phase-icon {
-  font-size: 2rem;
-  margin-right: 10px;
+/* STAR RATING RADIO INPUT */
+.radio-input {
+  display: flex;
+  scale: 0.15;
+  transform: rotate(180deg);
 }
 
+.star {
+  margin: 1em;
+  appearance: none;
+  --color: var(--text-light);
+  border-left: 6.5em solid transparent;
+  border-right: 6.5em solid transparent;
+  border-bottom: 4em solid var(--color);
+  transform: rotate(0deg);
+  cursor: pointer;
+}
+
+.star:before,
+.star:after {
+  content: "";
+  border-left: 6.5em solid transparent;
+  border-right: 6.5em solid transparent;
+  border-top: 4em solid var(--color);
+  position: absolute;
+  left: -6.5em;
+}
+
+.star:before {
+  transform: rotate(108deg);
+}
+
+.star:after {
+  transform: rotate(253deg);
+}
+
+.radio-input > .star:hover ~ .star,
+.radio-input > .star:hover,
+.radio-input > .star:checked ~ .star,
+.radio-input > .star:checked {
+  --color: yellow;
+}
+
+/* OBSERVATION CARDS */
 .observation-card {
   background-color: var(--accent);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-default);
 }
 
 .observation-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .observation-date {
@@ -158,11 +226,16 @@ textarea {
   color: var(--primary);
 }
 
+.moon-phase-icon {
+  font-size: 2rem;
+  margin-right: var(--spacing-sm);
+}
+
 .observation-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 10px;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .detail-item {
@@ -174,81 +247,25 @@ textarea {
   background-color: var(--primary);
   color: var(--text-light);
   border: 1px solid var(--primary);
-  border-radius: 4px;
-  padding: 10px;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 5px;
-  color: var(--text-light);
-}
-
-.pagination button {
-  padding: 5px 10px;
-}
-
-.no-results{
+.no-results {
   color: var(--text-light);
   text-align: center;
   font-size: 1.2rem;
 }
 
+/* MEDIA */
 @media (max-width: 768px) {
-  .controls {
+  .controls,
+  .search-sort {
     flex-direction: column;
+    width: 100%;
   }
 
   .search-sort {
-    flex-direction: column;
+    width: 100%;
   }
 }
-
-/* From Uiverse.io by Ratinax */
-.radio-input {
-  display: flex;
-  scale: 0.15;
-  transform: rotate(180deg);
-}
-
-.star {
-  margin: 1em;
-  appearance: none;
-  --color: white;
-  border-left: 6.5em solid transparent;
-  border-right: 6.5em solid transparent;
-  border-bottom: 4em solid var(--color);
-  transform: rotate(0deg);
-  cursor: pointer;
-}
-
-.star:before {
-  content: "";
-  border-left: 6.5em solid transparent;
-  border-right: 6.5em solid transparent;
-  border-top: 4em solid var(--color);
-  position: absolute;
-  left: -6.5em;
-  transform: rotate(108deg);
-}
-
-.star:after {
-  content: "";
-  border-left: 6.5em solid transparent;
-  border-right: 6.5em solid transparent;
-  border-top: 4em solid var(--color);
-  position: absolute;
-  left: -6.5em;
-  transform: rotate(253deg);
-}
-
-.radio-input > .star:hover ~ .star,
-.radio-input > .star:hover,
-.radio-input > .star:checked ~ .star,
-.radio-input > .star:checked {
-  --color: yellow;
-}
-
-

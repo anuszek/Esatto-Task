@@ -11,31 +11,34 @@
   <body>
     <header>
       <h1>Lunar Observation Journal</h1>
-      <div id="test"></div>
-      <p>Track your moon observations and correlate with astronomical data</p>
+      <p>Place to track your moon observations</p>
     </header>
 
-    <div class="controls">
-      <div class="search-sort">
-        <input type="text" id="search" placeholder="Search notes..." />
-        <select id="sort">
-          <option value="date-desc">Date (Newest First)</option>
-          <option value="date-asc">Date (Oldest First)</option>
-          <option value="phase">Moon Phase</option>
-          <option value="rating-asc">Rating (Low to High)</option>
-          <option value="rating-desc">Rating (High to Low)</option>
-        </select>
-      </div>
-      <button id="add-observation">+ New Observation</button>
-    </div>
+    <main>
+      <section class="controls">
+        <div class="search-sort">
+          <input type="text" id="search" placeholder="Search notes..." />
 
-    <div id="observations-list"></div>
+          <select id="sort">
+            <option value="" selected disabled>Order by</option>
+            <option value="date-desc">Date (Newest First)</option>
+            <option value="date-asc">Date (Oldest First)</option>
+            <option value="phase">Moon Phase</option>
+            <option value="rating-asc">Rating (Low to High)</option>
+            <option value="rating-desc">Rating (High to Low)</option>
+          </select>
+        </div>
+        <button id="add-observation">+ New Observation</button>
+      </section>
 
-    <div class="pagination">
-      <button id="prev-page" disabled>Previous</button>
-      <span id="page-info"></span>
-      <button id="next-page">Next</button>
-    </div>
+      <section id="observations-list"></section>
+
+      <nav class="pagination">
+        <button id="prev-page" disabled>Previous</button>
+        <span id="page-info"></span>
+        <button id="next-page">Next</button>
+      </nav>
+    </main>
 
     <div class="modal" id="observation-modal">
       <div class="modal-content">

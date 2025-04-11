@@ -1,7 +1,8 @@
 const axios = require("axios");
+require("dotenv").config();
 
 async function fetchWeather() {
-  const apiKey = "451e252e659bf3f308a40bfb80b72ce4";
+  const apiKey = process.env.OPENWEATHER_API_KEY;   
   const city = "Krakow";
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
