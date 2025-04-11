@@ -2,7 +2,7 @@
 
 ## Setup Guide
 
-1. **Install Node.js**
+1. **Install Node.js**:
 
    - Download and install from [nodejs.org](https://nodejs.org/)
    - Verify installation with `node --version` in your terminal
@@ -13,7 +13,7 @@
    npm install
    ```
 
-3. **Aquire OpenWeather API key**
+3. **Aquire OpenWeather API key**:
 
    - Go to [openweathermap.org](https://home.openweathermap.org/)
    - Sign up for a free account and obtain an API key
@@ -32,4 +32,4 @@
 
 5. **Access the app**:
    - Open `http://localhost:3000` in your browser
-   - The database will be created automatically on first run.
+   - The database will be created automatically on first run
